@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Dodge Game.sln"
+    "dotnet.defaultSolution": "Ice_Dodger.sln"
 }

@@ -9,9 +9,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float maxX;
 
     private float spawnInterval = 1.5f;
-    private float minSpawnInterval = 0.4f;
-    private float difficultyRamp = 0.05f; // cuanto se reduce cada escalado
-
+    private float minSpawnInterval = 0.4f; 
+    private float difficultyRamp = 0.05f; // cuanto se reduce en cada escalado
+    private float blockFallGravity = 1f;
+    private float maxFallGravity = 5f;
+    private float gravityRamp = 0.2f; 
     private ObjectPool<Block> blockPool;
     private Transform playerTransform;
     private Coroutine spawnCoroutine;
@@ -71,6 +73,7 @@ public class SpawnManager : MonoBehaviour
         block.gameObject.SetActive(true);
         block.SetPlayer(playerTransform);
         block.SetPool(blockPool);
+        block.SetFallGravity(blockFallGravity);
     }
 
     public void IncreaseDifficulty()
@@ -80,6 +83,13 @@ public class SpawnManager : MonoBehaviour
             spawnInterval -= difficultyRamp;
             spawnInterval = Mathf.Max(spawnInterval, minSpawnInterval);
             Debug.Log("Increased difficulty. New spawn interval: " + spawnInterval);
+        }
+
+        if (blockFallGravity < maxFallGravity)
+        {
+            blockFallGravity += gravityRamp;
+            blockFallGravity = Mathf.Min(blockFallGravity, maxFallGravity);
+            Debug.Log("Increased block fall gravity: " + blockFallGravity);
         }
     }
 

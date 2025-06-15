@@ -6,6 +6,7 @@ public class Block : MonoBehaviour
     private Transform player;
     private ObjectPool<Block> pool;
     private bool hasScored = false;
+    private Rigidbody2D rb; 
 
     public void SetPlayer(Transform playerTransform)
     {
@@ -15,6 +16,11 @@ public class Block : MonoBehaviour
     public void SetPool(ObjectPool<Block> objectPool)
     {
         pool = objectPool;
+    }
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -32,6 +38,11 @@ public class Block : MonoBehaviour
             AudioManager.Instance.PlayBlockImpact();
             pool.Release(this);
         }
+    }
+
+    public void SetFallGravity(float gravity)
+    {
+        rb.gravityScale = gravity;
     }
     
     public void ResetState()
